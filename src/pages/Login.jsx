@@ -30,7 +30,6 @@ class Login extends React.Component {
       loading: true,
     });
     const userCreate = await createUser({ name: nameInput });
-    console.log(userCreate);
     this.setState({
       loading: false,
       redirect: userCreate,
