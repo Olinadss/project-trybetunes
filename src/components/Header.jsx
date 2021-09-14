@@ -3,9 +3,9 @@ import React from 'react';
 class Header extends React.Component {
   render() {
     return (
-      <div>
-        Carregando...
-      </div>
+      <header data-testid="header-component">
+        teste
+      </header>
     );
   }
 }
