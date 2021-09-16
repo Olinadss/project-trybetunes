@@ -8,7 +8,7 @@ class ListAlbuns extends React.Component {
     return (
       <div>
         { albuns.map((albunsList) => (<AlbumCard
-          key={ albuns.collectionId }
+          key={ albunsList.collectionId }
           artistSearch={ albunsList }
         />))}
       </div>
