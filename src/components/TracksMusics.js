@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { addSong, removeSong } from '../services/favoriteSongsAPI';
+import { addSong, removeSong, getFavoriteSongs } from '../services/favoriteSongsAPI';
 import Loading from '../pages/Loading';
 
 class TracksMusics extends React.Component {
@@ -8,38 +8,66 @@ class TracksMusics extends React.Component {
     super();
 
     this.alteraChecked = this.alteraChecked.bind(this);
+    this.invokeGetFavoriteSongs = this.invokeGetFavoriteSongs.bind(this);
 
     this.state = {
       checked: false,
       loading: false,
+      arrayFavorites: [],
     };
   }
 
-  async alteraChecked() {
-    const { checked } = this.state;
+  componentDidMount() {
+    this.invokeGetFavoriteSongs();
+  }
+
+  async invokeGetFavoriteSongs() {
     const { musicsList } = this.props;
+    // this.setState({
+    // });
+    const favoritesMusic = await getFavoriteSongs();
+    this.setState({
+      arrayFavorites: favoritesMusic,
+      checked: favoritesMusic
+        .some((music) => music.trackName === musicsList.trackName),
+    });
+  }
+
+  async alteraChecked() {
+    const { arrayFavorites } = this.state;
+    const { musicsList } = this.props;
+    const verificaMusicFavorite = arrayFavorites
+      .some((music) => music.trackName === musicsList.trackName);
+    console.log('esta é a musica', verificaMusicFavorite);
     this.setState({
       loading: true,
     });
-    if (!checked) {
-      await addSong(musicsList);
+    if (verificaMusicFavorite) {
+      await removeSong(musicsList);
+      const teste = await getFavoriteSongs();
+      console.log('Remove pelo amor Deus', teste);
       this.setState({
-        checked: true,
         loading: false,
+        arrayFavorites: teste,
       });
     } else {
-      await removeSong(musicsList);
+      await addSong(musicsList);
+      const teste = await getFavoriteSongs();
+      console.log('pára adicionar', teste);
       this.setState({
-        checked: false,
         loading: false,
+        arrayFavorites: teste,
       });
     }
   }
 
   render() {
-    const { checked, loading } = this.state;
+    const { checked, loading, arrayFavorites } = this.state;
     const { musicsList:
-      { trackName, trackId, previewUrl } } = this.props;
+      { trackName, trackId, previewUrl }, checkedOut } = this.props;
+    const checkedValue = checkedOut || checked;
+    const verificaMusicFavorite = arrayFavorites
+      .some((music) => music.trackName === trackName);
     return (
       loading ? <Loading />
         : (
@@ -56,12 +84,13 @@ class TracksMusics extends React.Component {
               htmlFor={ `checkbox-${trackName}` }
               data-testid={ `checkbox-music-${trackId}` }
             >
+              Favorita
               <input
                 type="checkbox"
                 id={ `checkbox-${trackName}` }
                 name="checkedMusic"
-                checked={ checked }
-                onClick={ this.alteraChecked }
+                checked={ verificaMusicFavorite }
+                onChange={ this.alteraChecked }
               />
             </label>
           </section>

@@ -1,12 +1,52 @@
 import React from 'react';
 import Header from '../components/Header';
+import TracksMusics from '../components/TracksMusics';
+// import { getFavoriteSongs } from '../services/favoriteSongsAPI';
 
 class Favorites extends React.Component {
+  constructor() {
+    super();
+
+    this.invokeGetFavoriteSongs = this.invokeGetFavoriteSongs.bind(this);
+
+    this.state = {
+      arrayFavorites: [],
+      checked: true,
+    };
+  }
+
+  // componentDidMount() {
+  //   this.invokeGetFavoriteSongs();
+  // }
+
+  // async removeFavorite() {
+  //   const { favoritesMusic } = this.state;
+  //   await removeSong(favoritesMusic);
+  //   this.setState({
+  //     checked: false,
+  //   });
+  // }
+
+  async invokeGetFavoriteSongs() {
+    const favoritesMusic = await getFavoriteSongs();
+    this.setState({
+      arrayFavorites: favoritesMusic,
+    });
+  }
+
   render() {
+    const { arrayFavorites, checked } = this.state;
     return (
       <div data-testid="page-favorites">
         <Header />
-        Eu sou o Favotito
+        {arrayFavorites ? (
+          arrayFavorites.map((music) => (<TracksMusics
+            key={ music.trackId }
+            musicsList={ music }
+            checkedOut={ checked }
+            musicFavorite={ arrayFavorites }
+          />))) : '' }
+
       </div>
     );
   }

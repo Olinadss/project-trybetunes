@@ -1,41 +1,10 @@
 import React from 'react';
-import PropTypes, { objectOf } from 'prop-types';
+import PropTypes from 'prop-types';
 // import { addSong } from '../services/favoriteSongsAPI';
 // import Loading from '../pages/Loading';
 import TracksMusics from './TracksMusics';
 
 class MusicCard extends React.Component {
-  // constructor() {
-  //   super();
-
-  //   // this.handleChange = this.handleChange.bind(this);
-  //   // this.invokeAddSong = this.invokeAddSong.bind(this);
-
-  //   this.state = {
-  //     // checkedMusic: false,
-  //     loading: false,
-  //   };
-  // }
-
-  // componentDidMount() {
-  // }
-
-  // handleChange() {
-  //   // const { checked } = target;
-  //   // const value = target.type === 'checkbox' ? target.checked : target.value;
-  //   this.setState({
-  //     loading: true,
-  //   });
-  // this.invokeAddSong();
-  // }
-
-  // async invokeAddSong() {
-  //   await addSong();
-  //   this.setState({
-  //     loading: false,
-  //   });
-  // }
-
   render() {
     const { arrayMusic } = this.props;
     // const { loading } = this.state;
@@ -53,7 +22,6 @@ class MusicCard extends React.Component {
           <TracksMusics
             key={ music.trackId }
             musicsList={ music }
-            handleChange={ this.handleChange }
           />))}
       </div>
     );
@@ -61,13 +29,7 @@ class MusicCard extends React.Component {
 }
 
 MusicCard.propTypes = {
-  arrayMusic: PropTypes.arrayOf(
-    objectOf({
-      previewUrl: PropTypes.string,
-      trackName: PropTypes.string,
-      trackId: PropTypes.string,
-    }),
-  ).isRequired,
-};
+  arrayMusic: PropTypes.array,
+}.isRequered;
 
 export default MusicCard;
