@@ -11,7 +11,6 @@ class TracksMusics extends React.Component {
     this.invokeGetFavoriteSongs = this.invokeGetFavoriteSongs.bind(this);
 
     this.state = {
-      checked: false,
       loading: false,
       arrayFavorites: [],
     };
@@ -22,14 +21,11 @@ class TracksMusics extends React.Component {
   }
 
   async invokeGetFavoriteSongs() {
-    const { musicsList } = this.props;
     // this.setState({
     // });
     const favoritesMusic = await getFavoriteSongs();
     this.setState({
       arrayFavorites: favoritesMusic,
-      checked: favoritesMusic
-        .some((music) => music.trackName === musicsList.trackName),
     });
   }
 
@@ -62,10 +58,10 @@ class TracksMusics extends React.Component {
   }
 
   render() {
-    const { checked, loading, arrayFavorites } = this.state;
+    const { loading, arrayFavorites } = this.state;
     const { musicsList:
-      { trackName, trackId, previewUrl }, checkedOut } = this.props;
-    const checkedValue = checkedOut || checked;
+      { trackName, trackId, previewUrl } } = this.props;
+    // const checkedValue = checkedOut || checked;
     const verificaMusicFavorite = arrayFavorites
       .some((music) => music.trackName === trackName);
     return (
