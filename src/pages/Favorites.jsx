@@ -1,7 +1,7 @@
 import React from 'react';
 import Header from '../components/Header';
 import TracksMusics from '../components/TracksMusics';
-// import { getFavoriteSongs } from '../services/favoriteSongsAPI';
+import { getFavoriteSongs } from '../services/favoriteSongsAPI';
 
 class Favorites extends React.Component {
   constructor() {
@@ -11,13 +11,20 @@ class Favorites extends React.Component {
 
     this.state = {
       arrayFavorites: [],
-      checked: true,
     };
   }
 
-  // componentDidMount() {
-  //   this.invokeGetFavoriteSongs();
-  // }
+  componentDidMount() {
+    this.invokeGetFavoriteSongs();
+  }
+
+  componentDidUpdate() {
+    this.invokeGetFavoriteSongs();
+  }
+
+  componentWillUnmount() {
+    this.invokeGetFavoriteSongs();
+  }
 
   // async removeFavorite() {
   //   const { favoritesMusic } = this.state;
@@ -35,7 +42,7 @@ class Favorites extends React.Component {
   }
 
   render() {
-    const { arrayFavorites, checked } = this.state;
+    const { arrayFavorites } = this.state;
     return (
       <div data-testid="page-favorites">
         <Header />
@@ -43,7 +50,7 @@ class Favorites extends React.Component {
           arrayFavorites.map((music) => (<TracksMusics
             key={ music.trackId }
             musicsList={ music }
-            checkedOut={ checked }
+            // checkedOut={ checked }
             musicFavorite={ arrayFavorites }
           />))) : '' }
 
