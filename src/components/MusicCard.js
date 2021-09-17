@@ -1,9 +1,44 @@
 import React from 'react';
 import PropTypes, { objectOf } from 'prop-types';
+// import { addSong } from '../services/favoriteSongsAPI';
+// import Loading from '../pages/Loading';
+import TracksMusics from './TracksMusics';
 
 class MusicCard extends React.Component {
+  // constructor() {
+  //   super();
+
+  //   // this.handleChange = this.handleChange.bind(this);
+  //   // this.invokeAddSong = this.invokeAddSong.bind(this);
+
+  //   this.state = {
+  //     // checkedMusic: false,
+  //     loading: false,
+  //   };
+  // }
+
+  // componentDidMount() {
+  // }
+
+  // handleChange() {
+  //   // const { checked } = target;
+  //   // const value = target.type === 'checkbox' ? target.checked : target.value;
+  //   this.setState({
+  //     loading: true,
+  //   });
+  // this.invokeAddSong();
+  // }
+
+  // async invokeAddSong() {
+  //   await addSong();
+  //   this.setState({
+  //     loading: false,
+  //   });
+  // }
+
   render() {
     const { arrayMusic } = this.props;
+    // const { loading } = this.state;
     const { artistName, collectionName, artworkUrl100 } = arrayMusic[0];
     return (
       <div>
@@ -15,18 +50,11 @@ class MusicCard extends React.Component {
           {artistName}
         </h5>
         {arrayMusic.slice(1).map((music) => (
-          <section key={ music.trackId }>
-            <h4>{music.trackName}</h4>
-            <audio data-testid="audio-component" src={ music.previewUrl } controls>
-              <track kind="captions" />
-              O seu navegador não suporta o elemento
-              {' '}
-              <code>audio</code>
-              .
-            </audio>
-
-          </section>
-        ))}
+          <TracksMusics
+            key={ music.trackId }
+            musicsList={ music }
+            handleChange={ this.handleChange }
+          />))}
       </div>
     );
   }
