@@ -26,14 +26,6 @@ class Favorites extends React.Component {
     this.invokeGetFavoriteSongs();
   }
 
-  // async removeFavorite() {
-  //   const { favoritesMusic } = this.state;
-  //   await removeSong(favoritesMusic);
-  //   this.setState({
-  //     checked: false,
-  //   });
-  // }
-
   async invokeGetFavoriteSongs() {
     const favoritesMusic = await getFavoriteSongs();
     this.setState({
