@@ -2,6 +2,7 @@ import React from 'react';
 import { Redirect } from 'react-router-dom';
 import { createUser } from '../services/userAPI';
 import Loading from './Loading';
+import '../style/Login.css'
 
 class Login extends React.Component {
   constructor() {
@@ -48,21 +49,30 @@ class Login extends React.Component {
     }
 
     return (
-      <div data-testid="page-login">
-        <input
-          data-testid="login-name-input"
-          type="text"
-          name="nameInput"
-          onChange={ this.handleChange }
-        />
-        <button
-          data-testid="login-submit-button"
-          type="button"
-          disabled={ nameInput.length <= numberCharacters }
-          onClick={ () => this.invokeCreateUser() }
-        >
-          Entrar
-        </button>
+      <div className='login'>
+        <div data-testid="page-login" className='container'>
+          <label>Login:
+            <br/>
+            <input
+              placeholder='Digite seu usuário'
+              className='input-login'
+              data-testid="login-name-input"
+              type="text"
+              name="nameInput"
+              onChange={ this.handleChange }
+            />
+          </label>
+          
+          <button
+            className='button'
+            data-testid="login-submit-button"
+            type="button"
+            disabled={ nameInput.length <= numberCharacters }
+            onClick={ () => this.invokeCreateUser() }
+          >
+            Entrar
+          </button>
+        </div>
       </div>
     );
   }
